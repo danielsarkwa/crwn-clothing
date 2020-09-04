@@ -34,9 +34,6 @@ const Header = ({ currentUser }) => (
   </div>
 );
 
-// this allows to connect to the state reducer
-// where state is the root level app state
-// this function does not interact with this component
 const mapStateToProps = state => ({
   currentUser: state.user.currentUser
 });
