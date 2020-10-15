@@ -2,16 +2,15 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDroduvOgcpAZE2LHYkXDYCFVo1QtwlDwo",
-    authDomain: "crwn-clothing-1ed07.firebaseapp.com",
-    databaseURL: "https://crwn-clothing-1ed07.firebaseio.com",
-    projectId: "crwn-clothing-1ed07",
-    storageBucket: "crwn-clothing-1ed07.appspot.com",
-    messagingSenderId: "740933472539",
-    appId: "1:740933472539:web:e44cc96677fa8d531043be",
-    measurementId: "G-P3TC9XLKG7"
-  };
+var firebaseConfig = {
+  apiKey: "AIzaSyB-oHMEDvkF7pYyuzkD-D_5-Cd2UE9oqWY",
+  authDomain: "crwn-clothing-2-8eab9.firebaseapp.com",
+  databaseURL: "https://crwn-clothing-2-8eab9.firebaseio.com",
+  projectId: "crwn-clothing-2-8eab9",
+  storageBucket: "crwn-clothing-2-8eab9.appspot.com",
+  messagingSenderId: "1039117064450",
+  appId: "1:1039117064450:web:52756e7a99832f052a4a1b"
+};
 
 export const createUserProfileDocument = async (userAuth, addtionalData) => {
     if(!userAuth) return;
@@ -39,6 +38,42 @@ export const createUserProfileDocument = async (userAuth, addtionalData) => {
     }
 
     return userRef;
+}
+
+// convert data from firebase to an data structure the app can use
+export const converCollectionsSnapshotsToMap = (collection) => {
+  const transformedCollections = collection.docs.map(doc => {
+    const { title, items } = doc.data();
+
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    }
+  });
+
+  // build the map/object
+  return transformedCollections.reduce((accumulator, collection) => {
+    accumulator[collection.title.toLowerCase()] = collection;
+    return accumulator;
+  }, {});
+}
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  const colllectionRef = firestore.collection(collectionKey);
+  console.log(colllectionRef);
+
+  // upload all the data in a single request
+  const batch = firestore.batch();
+  objectsToAdd.forEach(obj => {
+    // create the document locally
+    const newDocRef = colllectionRef.doc();
+    // batch to  -- keep
+    batch.set(newDocRef, obj);
+  });
+
+  return await batch.commit();
 }
 
 firebase.initializeApp(firebaseConfig);

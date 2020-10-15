@@ -1,0 +1,31 @@
+* Document is a single file that belongs to an entity
+    - object data structure
+
+* collection is a group of entity documents in firebase
+    - array data structure
+
+* QueryReference object shows the location of a collection/document in firebase store
+  This contains only properties that tells us the details about what you are looking for
+    - firebase.doc('users/:userid');
+    - firebase.collection('/users');
+
+* DocumentReference objects is used to performs CRUD methods on documents 
+    -- returns documentSnapshot object
+    - set() -- create a new document with the same docRef properties
+    - get()
+    - update()
+    - delete()
+    - onSnapshot() -- listen for changes
+
+* CollectionReference object is used to performs actions on the collection 
+    -- returns querysnapshot object - collection snapshot document
+    - .add()
+
+* DocumentSnapshot object allows to work with the item it's self
+    - exit() / returns Boolean
+    - data() / returns JSON
+
+* QueryReference / collection snapshot
+    - docs() -- returns an array of documentSnapshot
+    - empty()
+    - size()
