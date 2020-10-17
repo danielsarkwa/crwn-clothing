@@ -16,7 +16,7 @@ export const  fetchCollectionsFailure = (errorMessage) => ({
     payload: errorMessage
 });
 
-// this is an action that is performed by the app -- and as it performs it's tasks, perform(dispatch other actions)
+// this is an action that is performed by the app -- and as it performs it's tasks, perform(dispatch other actions) that also so other things
 export const fetchCollectionsStartAsync = () => {
   return dispatch => {
     const collectionRef = firestore.collection('collections');
